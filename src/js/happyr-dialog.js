@@ -68,6 +68,8 @@
         this.$element = $(element)
             .delegate('[data-dismiss="happyr-dialog"]', 'click.dismiss.happyr-dialog', $.proxy(this.hide, this))
 
+        this.$element.hide();
+
         //add stuff to the dialog
         var body=this.$element.html();
         this.$element.html("");
@@ -316,6 +318,7 @@
 
 
             } else if (callback) {
+                console.log("no backdrop");
                 callback()
             }
         }
@@ -360,8 +363,7 @@
         showCloseButton: true,
         showConfirmButton: true,
         showHeaderCloseButton: true,
-        showHeaderTitle: true,
-        modal: true
+        showHeaderTitle: true
     }
 
     $.fn.happyrDialog.Constructor = HappyrDialog
@@ -386,13 +388,11 @@
         var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))); //strip for ie7
         var option = $target.data('happyr-dialog') ? 'toggle' : $.extend({ remote:!/#/.test(href) && href }, $target.data(), $this.data());
 
-        var title= $this.attr('title')?$this.attr('title'):$this.html();
-
         e.preventDefault()
 
         //Set title
         $target.happyrDialog({
-            title: title,
+            title: $this.attr('title'),
             show: false //dont auto show
         });
 
