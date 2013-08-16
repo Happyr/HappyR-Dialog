@@ -1,0 +1,23 @@
+{
+    "name": "happyr/happyr-dialog",
+    "type": "js-library",
+    "description": " ",
+    "keywords": ["dialog"],
+    "homepage": "http://developer.happyr.se",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tobias Nyholm",
+            "email": "tobias@happyrecruiting.se"
+        }
+    ],
+    "require": {
+
+    },
+    "require-dev": {
+
+    },
+    "autoload": {
+
+    }
+}
