@@ -26,7 +26,7 @@
  /* MODAL CLASS DEFINITION
   * ====================== */
 
-  var Modal = function (element, options) {
+  var HappyrDialog = function (element, options) {
     this.options = options
     this.$element = $(element)
       .delegate('[data-dismiss="happyr-dialog"]', 'click.dismiss.happyr-dialog', $.proxy(this.hide, this))
@@ -79,9 +79,9 @@
 	$element.append("</div>");
   }
 
-  Modal.prototype = {
+    HappyrDialog.prototype = {
 
-      constructor: Modal
+      constructor: HappyrDialog
 
     , toggle: function () {
         return this[!this.isShown ? 'show' : 'hide']()
@@ -241,33 +241,33 @@
  /* MODAL PLUGIN DEFINITION
   * ======================= */
 
-  var old = $.fn.modal
+  var old = $.fn.happyrDialog
 
-  $.fn.modal = function (option) {
+  $.fn.happyrDialog = function (option) {
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('happyr-dialog')
-        , options = $.extend({}, $.fn.modal.defaults, $this.data(), typeof option == 'object' && option)
-      if (!data) $this.data('happyr-dialog', (data = new Modal(this, options)))
+        , options = $.extend({}, $.fn.happyrDialog.defaults, $this.data(), typeof option == 'object' && option)
+      if (!data) $this.data('happyr-dialog', (data = new HappyrDialog(this, options)))
       if (typeof option == 'string') data[option]()
       else if (options.show) data.show()
     })
   }
 
-  $.fn.modal.defaults = {
+  $.fn.happyrDialog.defaults = {
       backdrop: true
     , keyboard: true
     , show: true
   }
 
-  $.fn.modal.Constructor = Modal
+  $.fn.happyrDialog.Constructor = HappyrDialog
 
 
  /* MODAL NO CONFLICT
   * ================= */
 
-  $.fn.modal.noConflict = function () {
-    $.fn.modal = old
+  $.fn.happyrDialog.noConflict = function () {
+    $.fn.happyrDialog = old
     return this
   }
 
@@ -284,7 +284,7 @@
     e.preventDefault()
 
     $target
-      .modal(option)
+      .happyrDialog(option)
       .one('hide', function () {
         $this.focus()
       })
