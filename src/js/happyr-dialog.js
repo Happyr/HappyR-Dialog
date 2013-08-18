@@ -71,12 +71,7 @@
         this.$element.hide();
 
         //add stuff to the dialog
-        var body=this.$element.html();
-        this.$element.html("");
-
         happyrDialog_addWrapper(this.$element, options);
-
-        this.$element.find('.happyr-dialog-body').html(body);
 
         this.options.remote && this.$element.find('.happyr-dialog-body').load(this.options.remote)
     }
@@ -87,11 +82,27 @@
      * @param options
      */
     function happyrDialog_addWrapper($element,options){
+        //save the current content
+        var body=$element.html();
+
+        //Clear the contents
+        $element.html("");
+
+        //add wrapper
+        $element.addClass("happyr-dialog");
+
+        if(options.animation){
+            $element.addClass("happyr-dialog-animation");
+        }
+
+
         if(options.showHeader){
             happyrDialog_addHeader($element,options);
         }
 
-        $element.append("<div class='happyr-dialog-body'></div>");
+        //add the body
+        var $bodyWrapper=$("<div></div>").addClass('happyr-dialog-body').append(body);
+        $element.append($bodyWrapper)
 
         if(options.showFooter){
             happyrDialog_addFooter($element,options);
@@ -106,21 +117,25 @@
      */
     function happyrDialog_addHeader($element,options){
         //start header
-        $element.append("<div class='happyr-dialog-header'>");
+        var $header=$("<div></div>").addClass('happyr-dialog-header');
+
+        if(options.showHeaderTitle && options.title != undefined){
+            //add heading
+            var $title=$("<h3>"+options.title+"</h3>");
+            $header.append($title);
+        }
 
         if(options.showConfirmButton){
             //add close button
-            $element.append("<button type='button' class='close' data-dismiss='happyr-dialog' aria-hidden='true'>x</button>");
+            var $closeButton=$("<button type='button' class='close' data-dismiss='happyr-dialog' aria-hidden='true'>x</button>");
+            $header.append($closeButton);
         }
 
-        if(options.showHeaderTitle){
-            //add heading
-            $element.append("<h3 id='myModalLabel'>"+options.title+"</h3>");
-        }
-
+        //add clear fix
+        $header.append($("<div></div>").addClass("happyr-dialog-clearfix"));
 
         //end header
-        $element.append("</div>");
+        $element.append($header);
     }
 
     /**
@@ -130,20 +145,22 @@
      * @param options
      */
     function happyrDialog_addFooter($element,options){
-        //start footer
-        $element.append("<div class='happyr-dialog-footer'>");
+
+        var $footer=$("<div></div>").addClass('happyr-dialog-footer');
 
         if(options.showCloseButton){
             //add buttons
-            $element.append("<button class='btn' data-dismiss='happyr-dialog' aria-hidden='true'>Close</button>")
+            var $closeButton=$("<button class='btn' data-dismiss='happyr-dialog' aria-hidden='true'>Close</button>");
+            $footer.append($closeButton)
         }
 
         if(options.showConfirmButton){
-            $element.append("<button class='btn btn-primary'>Save changes</button>");
+            var $confirmButton=$("<button class='btn btn-primary'>Save changes</button>");
+            $footer.append($confirmButton);
         }
 
-        //end footer
-        $element.append("</div>");
+
+        $element.append($footer);
     }
 
     HappyrDialog.prototype = {
@@ -170,20 +187,20 @@
             this.escape();
 
             this.backdrop(function () {
-                var transition = $.support.transition && that.$element.hasClass('fade')
+                var transition = $.support.transition && that.$element.hasClass('happyr-dialog-animation')
 
                 if (!that.$element.parent().length) {
-                    that.$element.appendTo(document.body) //don't move modals dom position
+                    that.$element.appendTo(document.body) //don't move dialogs dom position
                 }
 
                 that.$element.show()
 
                 if (transition) {
-                    that.$element[0].offsetWidth // force reflow
+                    that.$element[0].offsetWidth; // force reflow
                 }
 
                 that.$element
-                    .addClass('in')
+                    .addClass('happyr-dialog-in')
                     .attr('aria-hidden', false)
 
                 that.enforceFocus()
@@ -214,12 +231,12 @@
             $(document).off('focusin.happyr-dialog');
 
             this.$element
-                .removeClass('in')
+                .removeClass('happyr-dialog-in')
                 .attr('aria-hidden', true)
 
-            $.support.transition && this.$element.hasClass('fade') ?
+            $.support.transition && this.$element.hasClass('happyr-dialog-animation') ?
                 this.hideWithTransition() :
-                this.hideModal()
+                this.hideDialog()
         }
 
         , enforceFocus: function () {
@@ -243,11 +260,11 @@
         }
 
         , hideWithTransition: function () {
-            var that = this
-                , timeout = setTimeout(function () {
+            var that = this;
+            var timeout = setTimeout(function () {
                     that.$element.off($.support.transition.end)
                     that.hideDialog()
-                }, 500)
+                }, 500);
 
             this.$element.one($.support.transition.end, function () {
                 clearTimeout(timeout)
@@ -256,8 +273,8 @@
         }
 
         , hideDialog: function () {
-            var that = this
-            this.$element.hide()
+            var that = this;
+            this.$element.hide();
             this.backdrop(function () {
                 that.removeBackdrop()
                 that.$element.trigger('hidden')
@@ -265,14 +282,17 @@
         }
 
         , removeBackdrop: function () {
-            console.log("Remove backdrop");
             this.$backdrop && this.$backdrop.remove()
             this.$backdrop = null
         }
 
+        , setTitle: function (title) {
+            this.options.title=title;
+        }
+
         , backdrop: function (callback) {
             var that = this;
-            var animate = this.$element.hasClass('fade') ? 'fade' : '';
+            var animate = this.$element.hasClass('happyr-dialog-animation') ? 'happyr-dialog-animation' : '';
 
             if (this.isShown && this.options.backdrop) {
                 var doAnimate = $.support.transition && animate
@@ -291,14 +311,13 @@
                     this.$backdrop[0].offsetWidth;
                 }
 
-                this.$backdrop.addClass('in')
+                this.$backdrop.addClass('happyr-dialog-in')
 
                 if (!callback){
                     return;
                 }
 
                 if(doAnimate){
-                    console.log($.support.transition.end);
                     this.$backdrop.one($.support.transition.end, callback);
                 }
                 else{
@@ -307,9 +326,9 @@
 
 
             } else if (!this.isShown && this.$backdrop) {
-                this.$backdrop.removeClass('in')
+                this.$backdrop.removeClass('happyr-dialog-in')
 
-                if($.support.transition && this.$element.hasClass('fade')){
+                if($.support.transition && this.$element.hasClass('happyr-dialog-animation')){
                     this.$backdrop.one($.support.transition.end, callback);
                 }
                 else{
@@ -318,14 +337,13 @@
 
 
             } else if (callback) {
-                console.log("no backdrop");
                 callback()
             }
         }
     }
 
 
-    /* MODAL PLUGIN DEFINITION
+    /* Dialog PLUGIN DEFINITION
      * ======================= */
 
     var old = $.fn.happyrDialog
@@ -336,7 +354,8 @@
             var $this = $(this);
             var data = $this.data('happyr-dialog');
             var options = $.extend({}, $.fn.happyrDialog.defaults, $this.data(), typeof option == 'object' && option);
-
+            console.log("plugin def");
+            console.log(options);
 
             if (!data) {
                 $this.data('happyr-dialog', (data = new HappyrDialog(this, options)))
@@ -369,18 +388,18 @@
     $.fn.happyrDialog.Constructor = HappyrDialog
 
 
-    /* MODAL NO CONFLICT
+    /* Dialog NO CONFLICT
      * ================= */
 
     $.fn.happyrDialog.noConflict = function () {
-        $.fn.happyrDialog = old
-        return this
+        $.fn.happyrDialog = old;
+        return this;
     }
 
 
 
     /**
-     * Auto add modal if clickable element data-toggle="happyr-dialog" is defined
+     * Auto add dialog if clickable element data-toggle="happyr-dialog" is defined
      */
     $(document).on('click.happyr-dialog.data-api', '[data-toggle="happyr-dialog"]', function (e) {
         var $this = $(this);
@@ -388,19 +407,25 @@
         var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))); //strip for ie7
         var option = $target.data('happyr-dialog') ? 'toggle' : $.extend({ remote:!/#/.test(href) && href }, $target.data(), $this.data());
 
+        console.log("listener");
+        console.log(option);
+
         e.preventDefault()
 
         //Set title
-        $target.happyrDialog({
-            title: $this.attr('title'),
-            show: false //dont auto show
-        });
+        var title=$this.attr('data-dialog-title')? $this.attr('data-dialog-title') : $this.attr('title');
+        if(title != undefined){
+            $target.happyrDialog({
+                title: title,
+                show: false
+            });
+        }
 
         $target
             .happyrDialog(option)
             .one('hide', function () {
                 $this.focus()
-            })
+            });
     })
 
 }(window.jQuery);
