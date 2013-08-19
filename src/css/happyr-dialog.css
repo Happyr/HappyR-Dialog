@@ -5,6 +5,7 @@
     left: 50%;
     z-index: 1050;
     width: 560px;
+
     margin-left: -280px;
     background-color: #ffffff;
     border: 1px solid #999;
@@ -24,7 +25,10 @@
     outline: none;
 }
 
-
+.happyr-dialog img.happyr-dialog-loader{
+    margin: 1em auto 0;
+    display:block;
+}
 
 .happyr-dialog-header {
     padding: 9px 15px;
@@ -79,6 +83,7 @@
     overflow-y: auto;
     max-height: 400px;
     padding: 15px;
+    min-height: 3em;
 }
 
 

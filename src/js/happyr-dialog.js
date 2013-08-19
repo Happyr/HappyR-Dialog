@@ -80,8 +80,11 @@
 
 
         if(this.options.remote){
-            //TODO add loader image
             var $dialogBody=this.$element.find('.happyr-dialog-body');
+
+            //add loader image
+            $dialogBody.html('<img class="happyr-dialog-loader" src="'+options.loaderImage+'" />')
+
             $dialogBody.load(this.options.remote, function(){
                 if( options.submitFormOnConfirm ){
 
@@ -355,6 +358,7 @@
      */
     $.fn.happyrDialog.defaults = {
         backdrop: true,
+        loaderImage: '/src/images/loader.gif',
         keyboard: true,
         show: true,
         showHeader: true,
@@ -388,10 +392,10 @@
      * Auto add dialog if clickable element data-toggle="happyr-dialog" is defined
      */
     $(document).on('click.happyr-dialog.data-api', '[data-toggle="happyr-dialog"]', function (e) {
+        console.log("=== Start ===");
         var $this = $(this);
         var href = $this.attr('href');
-        var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))); //strip for ie7
-
+        var $target = $($this.attr('data-target') || (href && !href.match(/[?=]/) && href.replace(/.*(?=#[^\s]+$)/, ''))); //strip for ie7
         var elementSettings=happyrDialog_convertStringToObject($this.attr('data-happyr-dialog-settings'));
 
         elementSettings=$.extend(
