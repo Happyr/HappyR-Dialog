@@ -392,7 +392,6 @@
      * Auto add dialog if clickable element data-toggle="happyr-dialog" is defined
      */
     $(document).on('click.happyr-dialog.data-api', '[data-toggle="happyr-dialog"]', function (e) {
-        console.log("=== Start ===");
         var $this = $(this);
         var href = $this.attr('href');
         var $target = $($this.attr('data-target') || (href && !href.match(/[?=]/) && href.replace(/.*(?=#[^\s]+$)/, ''))); //strip for ie7
