@@ -46,19 +46,19 @@
 
                 for (name in transEndEventNames){
                     if (el.style[name] !== undefined) {
-                        return transEndEventNames[name]
+                        return transEndEventNames[name];
                     }
                 }
 
-            }())
+            }());
 
             return transitionEnd && {
                 end: transitionEnd
-            }
+            };
 
-        })()
+        })();
 
-    })
+    });
 
 }(window.jQuery);
 
@@ -74,7 +74,7 @@
      * @constructor
      */
     var HappyrDialog = function (element, options) {
-        this.options = options
+        this.options = options;
         this.$element = $(element);
 
         this.$element.delegate('[data-dismiss="happyr-dialog"]', 'click.dismiss.happyr-dialog', $.proxy(this.hide, this));
@@ -90,8 +90,8 @@
             var $dialogBody=this.$element.find('.happyr-dialog-body');
 
             //add loader image
-            if(options.loaderImage != undefined){
-                $dialogBody.html('<img class="happyr-dialog-loader" src="'+options.loaderImage+'" />')
+            if(options.loaderImage !== undefined){
+                $dialogBody.html('<img class="happyr-dialog-loader" src="'+options.loaderImage+'" />');
             }
 
             $dialogBody.load(this.options.remote, function(){
@@ -121,7 +121,7 @@
 
             });
         }
-    }
+    };
 
 
     HappyrDialog.prototype = {
@@ -154,7 +154,7 @@
             this.escape();
 
             this.backdrop(function () {
-                var transition = $.support.transition && that.$element.hasClass('happyr-dialog-animation')
+                var transition = $.support.transition && that.$element.hasClass('happyr-dialog-animation');
 
                 if (!that.$element.parent().length) {
                     that.$element.appendTo(document.body); //don't move dialogs dom position
@@ -177,9 +177,12 @@
                     $(document).trigger('happyr-dialog-shown');
                 };
 
-                transition ?
-                    that.$element.one($.support.transition.end, triggerShowEvents) :
+                if(transition){
+                    that.$element.one($.support.transition.end, triggerShowEvents());
+                }
+                else{
                     triggerShowEvents();
+                }
 
             });
         },
@@ -189,7 +192,9 @@
          * @param e
          */
         hide: function (e) {
-            e && e.preventDefault();
+            if(e){
+                e.preventDefault();
+            }
 
             var that = this;
 
@@ -197,7 +202,9 @@
 
             this.$element.trigger(e);
 
-            if (!this.isShown || e.isDefaultPrevented()) return
+            if (!this.isShown || e.isDefaultPrevented()) {
+                return;
+            }
 
             this.isShown = false;
 
@@ -207,23 +214,29 @@
 
             this.$element
                 .removeClass('happyr-dialog-in')
-                .attr('aria-hidden', true)
+                .attr('aria-hidden', true);
 
-            $.support.transition && this.$element.hasClass('happyr-dialog-animation') ?
-                this.hideWithTransition() :
-                this.hideDialog()
+            if($.support.transition && this.$element.hasClass('happyr-dialog-animation'))
+            {
+                this.hideWithTransition();
+            }
+            else{
+                this.hideDialog();
+            }
+
+
         },
 
         /**
          * Focus on dialog
          */
         enforceFocus: function () {
-            var that = this
+            var that = this;
             $(document).on('focusin.happyr-dialog', function (e) {
                 if (that.$element[0] !== e.target && !that.$element.has(e.target).length) {
                     that.$element.focus()
                 }
-            })
+            });
         },
 
         /**
@@ -316,7 +329,7 @@
 
 
             } else if (!this.isShown && this.$backdrop) {
-                this.$backdrop.removeClass('happyr-dialog-in')
+                this.$backdrop.removeClass('happyr-dialog-in');
 
                 if($.support.transition && this.$element.hasClass('happyr-dialog-animation')){
                     this.$backdrop.one($.support.transition.end, callback);
@@ -327,14 +340,14 @@
 
 
             } else if (callback) {
-                callback()
+                callback();
             }
         }
-    }
+    };
 
 
     // save current dialog impl
-    var old = $.fn.happyrDialog
+    var old = $.fn.happyrDialog;
 
     /**
      * Register the plugin with jQuery and make sure it works as expected
@@ -346,25 +359,25 @@
         return this.each(function () {
             var $this = $(this);
             var data = $this.data('happyrDialog');
-            var options = $.extend({}, $.fn.happyrDialog.defaults, $this.data(), typeof option == 'object' && option);
+            var options = $.extend({}, $.fn.happyrDialog.defaults, $this.data(), typeof option === 'object' && option);
 
             //if no dialog or not dialog visible
             if(!data || !data.isShown){
                 //create dialog
-                $this.data('happyrDialog', (data = new HappyrDialog(this, options)))
+                $this.data('happyrDialog', (data = new HappyrDialog(this, options)));
             }
 
-            if (typeof option == 'string') {
+            if (typeof option === 'string') {
                 data[option]();
             }
-            else if(option.action != undefined){
+            else if(option.action !== undefined){
                 data[option.action]();
             }
             else if (options.show) {
                 data.show();
             }
-        })
-    }
+        });
+    };
 
     /**
      * Default options
@@ -383,9 +396,9 @@
         submitFormOnConfirm: true,
         getFormResultInDialog: true,
         hideAfterFormSubmit: false
-    }
+    };
 
-    $.fn.happyrDialog.Constructor = HappyrDialog
+    $.fn.happyrDialog.Constructor = HappyrDialog;
 
 
 
@@ -397,7 +410,7 @@
     $.fn.happyrDialog.noConflict = function () {
         $.fn.happyrDialog = old;
         return this;
-    }
+    };
 
 
 
@@ -425,12 +438,12 @@
         e.preventDefault();
 
         //if no target found
-        if($target.length == 0){
+        if($target.length === 0){
             //try to get autogenerated
             $target=$("#happyr-dialog");
 
             //if target still not found
-            if($target.length == 0){
+            if($target.length === 0){
                 //Create a target
                 $target=$('<div id="happyr-dialog" style="display:none" tabindex="-1" role="dialog" aria-hidden="true" />')
                     .appendTo(document.body);
@@ -441,9 +454,9 @@
         $target
             .happyrDialog(elementSettings)
             .one('hide', function () {
-                $this.focus()
+                $this.focus();
             });
-    })
+    });
 
 
     /**
@@ -454,8 +467,8 @@
      * @returns Object
      */
     function happyrDialog_convertStringToObject(string){
-        if(string == undefined || string == ""){
-            return new Object();
+        if(string === undefined || string === ""){
+            return {};
         }
         return JSON.parse(JSON.stringify(eval("("+string+")")));
     }
@@ -493,7 +506,7 @@
 
         //add the body
         var $bodyWrapper=$("<div></div>").addClass('happyr-dialog-body').append(body);
-        $element.append($bodyWrapper)
+        $element.append($bodyWrapper);
 
         if(options.showFooter){
             happyrDialog_addFooter($element,options);
@@ -510,7 +523,7 @@
         //start header
         var $header=$("<div></div>").addClass('happyr-dialog-header');
 
-        if(options.showHeaderTitle && options.title != undefined){
+        if(options.showHeaderTitle && options.title !== undefined){
             //add heading
             var $title=$("<h3>"+options.title+"</h3>");
             $header.append($title);
@@ -542,14 +555,14 @@
         if(options.showCloseButton){
             //add buttons
             var $closeButton=$("<button class='btn' data-dismiss='happyr-dialog' aria-hidden='true'>"+options.showCloseButton+"</button>");
-            $footer.append($closeButton)
+            $footer.append($closeButton);
         }
 
         if(options.showConfirmButton){
             var $confirmButton=$("<button class='btn btn-primary'>"+options.showConfirmButton+"</button>");
             $confirmButton.click(function(e){
                 $(document).trigger('happyr-dialog-confirm');
-            })
+            });
             $footer.append($confirmButton);
         }
 
