@@ -133,13 +133,14 @@
                     that.enforceFocus();
                 }
 
-                if(that.options.animation){
+                if(that.options.animate){
                     that.$element
                         .css('opacity',0)
                         .css('top','-25%');
 
                     showDialog();
-                    that.$element.animate({ top: '10%', opacity: '1' }, 300, 'swing', triggerShowEvents);
+                    that.$element.animate({ top: '10%', opacity: '1' },
+                        that.options.animation.timeDialogShow, 'swing', triggerShowEvents);
 
                 }
                 else{
@@ -176,8 +177,8 @@
                 that.hideDialog();
             };
 
-            if(that.options.animation){
-                that.$element.animate({ top: '-25%', opacity: '0' }, 300, 'swing',hideDialog);
+            if(that.options.animate){
+                that.$element.animate({ top: '-25%', opacity: '0' }, that.options.animation.timeDialogHide, 'swing',hideDialog);
             }
             else{
                 hideDialog();
@@ -261,7 +262,11 @@
                     this.$backdrop.show();
 
                     //fade to 0.8
-                    this.$backdrop.fadeTo(200,0.8,callback);
+                    this.$backdrop.fadeTo(
+                        that.options.animation.timeBackdropShow,
+                        that.options.animation.opacityBackdrop,
+                        callback
+                    );
                 }
                 else{
                     this.$backdrop.show();
@@ -270,7 +275,7 @@
             } else if (!this.isShown && this.$backdrop) {
                 if(this.options.animation){
                     //fade to 0
-                    this.$backdrop.fadeTo(200,0,callback);
+                    this.$backdrop.fadeTo(that.options.animation.timeDialogHide,0,callback);
                 }
                 else{
                     callback();
@@ -320,17 +325,28 @@
      * Default options
      */
     $.fn.happyrDialog.defaults = {
-        animation: true,
+        animate: true,
+        animation: {
+            timeBackdropShow: 200,
+            timeBackdropHide: 200,
+            timeDialogShow: 300,
+            timeDialogHide: 300,
+            opacityBackdrop: 0.8
+        },
         backdrop: true,
         keyboard: true,
         show: true,
         showHeader: true,
         showFooter: true,
-        showCloseButton: 'Close',
-        showConfirmButton: 'Confirm',
+        showCloseButton: true,
+        showConfirmButton: true,
         showHeaderCloseButton: true,
         showHeaderTitle: true,
         submitFormOnConfirm: true,
+        texts: {
+            close: 'Close',
+            confirm: 'Confirm'
+        },
         getFormResultInDialog: true,
         hideAfterFormSubmit: false
     };
@@ -460,9 +476,9 @@
         //start header
         var $header=$("<div></div>").addClass('happyr-dialog-header');
 
-        if(options.showHeaderTitle && options.title !== undefined){
+        if(options.showHeaderTitle && options.texts.title !== undefined){
             //add heading
-            var $title=$("<h3>"+options.title+"</h3>");
+            var $title=$("<h3>"+options.texts.title+"</h3>");
             $header.append($title);
         }
 
@@ -491,16 +507,15 @@
 
         if(options.showCloseButton){
             //add buttons
-            var $closeButton=$("<button class='btn' data-dismiss='happyr-dialog' aria-hidden='true'>"+options.showCloseButton+"</button>");
+            var $closeButton=$("<button class='btn' data-dismiss='happyr-dialog' aria-hidden='true'>"+options.texts.close+"</button>");
             $footer.append($closeButton);
         }
 
         if(options.showConfirmButton){
-            var $confirmButton=$("<button class='btn btn-primary'>"+options.showConfirmButton+"</button>");
+            var $confirmButton=$("<button class='btn btn-primary'>"+options.texts.confirm+"</button>");
             $confirmButton.click(function(e){
                 $(document).trigger('happyr-dialog-confirm');
             });
-            $footer.append($confirmButton);
         }
 
 
