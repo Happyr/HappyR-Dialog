@@ -1,0 +1,177 @@
+/*!
+ * Bootstrap v2.3.2
+ *
+ * Copyright 2013 Twitter, Inc
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built with all the love in the world @twitter by @mdo and @fat.
+ */
+.happyr-dialog-clearfix {
+  *zoom: 1;
+}
+.happyr-dialog-clearfix:before,
+.happyr-dialog-clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.happyr-dialog-clearfix:after {
+  clear: both;
+}
+.happyr-dialog-hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.happyr-dialog-input-block-level {
+  display: block;
+  width: 100%;
+  min-height: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+
+.happyr-dialog-header {
+  padding: 9px 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.happyr-dialog-header h3 {
+  margin: 0;
+  line-height: 30px;
+}
+.happyr-dialog-body {
+  position: relative;
+  overflow-y: auto;
+  max-height: 400px;
+  padding: 15px;
+}
+.happyr-dialog-form {
+  margin-bottom: 0;
+}
+
+
+.happyr-dialog-footer [class^="icon-"],
+.happyr-dialog-footer [class*=" icon-"] {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    *margin-right: .3em;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-image: url("../img/glyphicons-halflings.png");
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+    margin-top: 1px;
+}
+
+
+.happyr-dialog.fade {
+    -webkit-transition: opacity .3s linear, top .3s ease-out;
+    -moz-transition: opacity .3s linear, top .3s ease-out;
+    -o-transition: opacity .3s linear, top .3s ease-out;
+    transition: opacity .3s linear, top .3s ease-out;
+    top: -25%;
+}
+.happyr-dialog.fade.in {
+    top: 10%;
+}
+.happyr-dialog-header {
+    padding: 9px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.happyr-dialog-header h3 {
+    margin: 0;
+    line-height: 30px;
+}
+.happyr-dialog-body {
+    position: relative;
+    overflow-y: auto;
+    max-height: 400px;
+    padding: 15px;
+}
+.happyr-dialog-form {
+    margin-bottom: 0;
+}
+
+
+
+@-ms-viewport {
+  width: device-width;
+}
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+@media (max-width: 767px) {
+
+    .happyr-dialog {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        width: auto;
+        margin: 0;
+    }
+    .happyr-dialog.fade {
+        top: -100px;
+    }
+    .happyr-dialog.fade.in {
+        top: 20px;
+    }
+}
+@media (max-width: 480px) {
+    .nav-collapse {
+        -webkit-transform: translate3d(0, 0, 0);
+    }
+    .page-header h1 small {
+        display: block;
+        line-height: 20px;
+    }
+    input[type="checkbox"],
+    input[type="radio"] {
+        border: 1px solid #ccc;
+    }
+    .form-horizontal .control-label {
+        float: none;
+        width: auto;
+        padding-top: 0;
+        text-align: left;
+    }
+    .form-horizontal .controls {
+        margin-left: 0;
+    }
+    .form-horizontal .control-list {
+        padding-top: 0;
+    }
+    .form-horizontal .form-actions {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .media .pull-left,
+    .media .pull-right {
+        float: none;
+        display: block;
+        margin-bottom: 10px;
+    }
+    .media-object {
+        margin-right: 0;
+        margin-left: 0;
+    }
+    .happyr-dialog {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+    }
+
+    .carousel-caption {
+        position: static;
+    }
+}
