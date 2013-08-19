@@ -384,8 +384,6 @@
             $this.data(),
             elementSettings
         );
-        console.log(elementSettings);
-
 
         //make sure the button/link does not behave as normal
         e.preventDefault();
