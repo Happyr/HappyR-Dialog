@@ -301,7 +301,7 @@
         return this.each(function () {
             var $this = $(this);
             var data = $this.data('happyrDialog');
-            var options = $.extend({}, $.fn.happyrDialog.defaults, $this.data(), typeof option === 'object' && option);
+            var options = $.extend(true, $.fn.happyrDialog.defaults, $this.data(), typeof option === 'object' && option);
 
             //if no dialog or not dialog visible
             if(!data || !data.isShown){
@@ -375,7 +375,13 @@
         var href = $this.attr('href');
         var $target = $($this.attr('data-target') || (href && !href.match(/[?=\/&]/) && href.replace(/.*(?=#[^\s]+$)/, ''))); //strip for ie7
         var elementSettings=happyrDialog_convertStringToObject($this.attr('data-happyr-dialog-settings'));
-        elementSettings=$.extend(
+
+        if($this.attr('data-happyr-dialog-title')){
+            elementSettings.texts=$.extend(true,elementSettings.texts,
+                {title: $this.attr('data-happyr-dialog-title')});
+        }
+
+        elementSettings=$.extend(true,
             {
                 remote:!/#/.test(href) && href,
                 action: 'toggle'
