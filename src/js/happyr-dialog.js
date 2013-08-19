@@ -90,7 +90,9 @@
             var $dialogBody=this.$element.find('.happyr-dialog-body');
 
             //add loader image
-            $dialogBody.html('<img class="happyr-dialog-loader" src="'+options.loaderImage+'" />')
+            if(options.loaderImage != undefined){
+                $dialogBody.html('<img class="happyr-dialog-loader" src="'+options.loaderImage+'" />')
+            }
 
             $dialogBody.load(this.options.remote, function(){
                 if( options.submitFormOnConfirm ){
@@ -169,11 +171,16 @@
                     .addClass('happyr-dialog-in')
                     .attr('aria-hidden', false)
 
-                that.enforceFocus()
+                that.enforceFocus();
+
+                var triggerShowEvents=function () {
+                    that.$element.focus().trigger('shown');
+                    $(document).trigger('happyr-dialog-shown');
+                };
 
                 transition ?
-                    that.$element.one($.support.transition.end, function () { that.$element.focus().trigger('shown') }) :
-                    that.$element.focus().trigger('shown')
+                    that.$element.one($.support.transition.end, triggerShowEvents) :
+                    triggerShowEvents();
 
             });
         },
@@ -365,7 +372,6 @@
      */
     $.fn.happyrDialog.defaults = {
         backdrop: true,
-        loaderImage: '/src/images/loader.gif',
         keyboard: true,
         show: true,
         showHeader: true,
