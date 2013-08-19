@@ -56,7 +56,8 @@ $.extend($.fn.happyrDialog.defaults,{
 
 To change settings per dialog use the 'data-happyr-dialog-settings' attribute on a DOM.
 ```html
-<a href="ajax.htm" data-happyr-dialog-settings="{backdrop: false, showFooter: false}" data-toggle="happyr-dialog">
+<a href="ajax.htm" data-toggle="happyr-dialog"
+    data-happyr-dialog-settings="{backdrop: false, showFooter: false}" >
     Open dialog
 </a>
 
