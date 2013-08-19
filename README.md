@@ -27,6 +27,9 @@ recommended that you import some CSS as well.
     <a href="#myDialog" data-toggle="happyr-dialog">
         Open dialog
     </a>
+    <div id="myDialog" style="display:none">
+        <p>Dialog contents.</p>
+    </div>
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/js/happyr-dialog.min.js"></script>
