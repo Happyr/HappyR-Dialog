@@ -1,3 +1,7 @@
+@import url("general.css");
+@import url("backdrop.css");
+@import url("buttons.css");
+
 
 .happyr-dialog {
     position: fixed;
