@@ -9,12 +9,7 @@
 }
 
 
-.happyr-dialog-backdrop,
-.happyr-dialog-backdrop.happyr-dialog-animation.happyr-dialog-in {
+.happyr-dialog-backdrop {
     opacity: 0.8;
     filter: alpha(opacity=80);
-}
-
-.happyr-dialog-backdrop.happyr-dialog-in{
-    top: 0;
 }

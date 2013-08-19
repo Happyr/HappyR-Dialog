@@ -10,21 +10,3 @@
 .happyr-dialog-clearfix:after {
     clear: both;
 }
-
-
-/*
- * Animation
- */
-.happyr-dialog-animation {
-    opacity: 0;
-    -webkit-transition: opacity .3s linear, top .3s ease-out;
-    -moz-transition: opacity .3s linear, top .3s ease-out;
-    -o-transition: opacity .3s linear, top .3s ease-out;
-    transition: opacity .3s linear, top .3s ease-out;
-    top: -25%;
-}
-
-.happyr-dialog-in {
-    top: 10%;
-    opacity: 1;
-}

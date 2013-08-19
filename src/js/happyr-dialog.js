@@ -29,43 +29,6 @@
 
     "use strict"; // jshint ;_;
 
-    $(function () {
-
-        $.support.transition = (function () {
-
-            var transitionEnd = (function () {
-
-                var el = document.createElement('bootstrap');
-                var  transEndEventNames = {
-                        'WebkitTransition' : 'webkitTransitionEnd',
-                        'MozTransition'    : 'transitionend',
-                        'OTransition'      : 'oTransitionEnd otransitionend',
-                        'transition'       : 'transitionend'
-                    };
-                var name;
-
-                for (name in transEndEventNames){
-                    if (el.style[name] !== undefined) {
-                        return transEndEventNames[name];
-                    }
-                }
-
-            }());
-
-            return transitionEnd && {
-                end: transitionEnd
-            };
-
-        })();
-
-    });
-
-}(window.jQuery);
-
-!function ($) {
-
-    "use strict"; // jshint ;_;
-
 
     /**
      * Constructor for happyr-dialogs
@@ -154,33 +117,33 @@
             this.escape();
 
             this.backdrop(function () {
-                var transition = $.support.transition && that.$element.hasClass('happyr-dialog-animation');
 
                 if (!that.$element.parent().length) {
                     that.$element.appendTo(document.body); //don't move dialogs dom position
                 }
-
-                that.$element.show();
-
-                if (transition) {
-                    that.$element[0].offsetWidth; // force reflow
-                }
-
-                that.$element
-                    .addClass('happyr-dialog-in')
-                    .attr('aria-hidden', false);
-
-                that.enforceFocus();
 
                 var triggerShowEvents=function () {
                     that.$element.focus().trigger('shown');
                     $(document).trigger('happyr-dialog-shown');
                 };
 
-                if(transition){
-                    that.$element.one($.support.transition.end, triggerShowEvents());
+                var showDialog=function(){
+                    that.$element.show();
+                    that.$element.attr('aria-hidden', false);
+                    that.enforceFocus();
+                }
+
+                if(that.options.animation){
+                    that.$element
+                        .css('opacity',0)
+                        .css('top','-25%');
+
+                    showDialog();
+                    that.$element.animate({ top: '10%', opacity: '1' }, 300, 'swing', triggerShowEvents);
+
                 }
                 else{
+                    showDialog();
                     triggerShowEvents();
                 }
 
@@ -197,9 +160,7 @@
             }
 
             var that = this;
-
             e = $.Event('hide');
-
             this.$element.trigger(e);
 
             if (!this.isShown || e.isDefaultPrevented()) {
@@ -207,22 +168,22 @@
             }
 
             this.isShown = false;
-
             this.escape();
-
             $(document).off('focusin.happyr-dialog');
 
-            this.$element
-                .removeClass('happyr-dialog-in')
-                .attr('aria-hidden', true);
+            var hideDialog=function(){
+                that.$element.attr('aria-hidden', true);
+                that.hideDialog();
+            };
 
-            if($.support.transition && this.$element.hasClass('happyr-dialog-animation'))
-            {
-                this.hideWithTransition();
+            if(that.options.animation){
+                that.$element.animate({ top: '-25%', opacity: '0' }, 300, 'swing',hideDialog);
             }
             else{
-                this.hideDialog();
+                hideDialog();
             }
+
+
 
 
         },
@@ -253,21 +214,6 @@
             }
         },
 
-        /**
-         * Hide the dialog with animation
-         */
-        hideWithTransition: function () {
-            var that = this;
-            var timeout = setTimeout(function () {
-                    that.$element.off($.support.transition.end)
-                    that.hideDialog()
-                }, 500);
-
-            this.$element.one($.support.transition.end, function () {
-                clearTimeout(timeout)
-                that.hideDialog()
-            })
-        },
 
         /**
          * Hide the dialog
@@ -295,49 +241,40 @@
          */
         backdrop: function (callback) {
             var that = this;
-            var animate = this.$element.hasClass('happyr-dialog-animation') ? 'happyr-dialog-animation' : '';
 
             if (this.isShown && this.options.backdrop) {
-                var doAnimate = $.support.transition && animate;
 
-                this.$backdrop = $('<div class="happyr-dialog-backdrop ' + animate + '" />')
+                this.$backdrop = $('<div class="happyr-dialog-backdrop" style="display:none" />')
                     .appendTo(document.body);
+
 
                 this.$backdrop.click(
                     this.options.backdrop == 'static' ?
                         $.proxy(this.$element[0].focus, this.$element[0])
                         : $.proxy(this.hide, this)
-                )
+                );
 
-                if (doAnimate) {
-                    // force reflow
-                    this.$backdrop[0].offsetWidth;
-                }
 
-                this.$backdrop.addClass('happyr-dialog-in');
+                if(this.options.animation){
+                    //set opacity = 0
+                    this.$backdrop.css('opacity',0);
+                    this.$backdrop.show();
 
-                if (!callback){
-                    return;
-                }
-
-                if(doAnimate){
-                    this.$backdrop.one($.support.transition.end, callback);
+                    //fade to 0.8
+                    this.$backdrop.fadeTo(200,0.8,callback);
                 }
                 else{
+                    this.$backdrop.show();
                     callback();
                 }
-
-
             } else if (!this.isShown && this.$backdrop) {
-                this.$backdrop.removeClass('happyr-dialog-in');
-
-                if($.support.transition && this.$element.hasClass('happyr-dialog-animation')){
-                    this.$backdrop.one($.support.transition.end, callback);
+                if(this.options.animation){
+                    //fade to 0
+                    this.$backdrop.fadeTo(200,0,callback);
                 }
                 else{
                     callback();
                 }
-
 
             } else if (callback) {
                 callback();
