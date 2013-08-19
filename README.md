@@ -8,7 +8,7 @@ Some features of the HappyR Dialog:
 - highly configurable
 - we don't force you to write tons of code of your own
 
-Please browse some of our (examples)[http://developer.happyr.se/libraries/jquery-happyr-dialog/examples) and when
+Please browse some of our [examples](http://developer.happyr.se/libraries/jquery-happyr-dialog/examples) and when
 you feel confident with the library you may want to have a look at the
 [configuration](http://developer.happyr.se/libraries/jquery-happyr-dialog#configuration).
 
