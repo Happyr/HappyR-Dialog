@@ -446,11 +446,6 @@
         //add wrapper
         $element.addClass("happyr-dialog");
 
-        if(options.animation){
-            $element.addClass("happyr-dialog-animation");
-        }
-
-
         if(options.showHeader){
             happyrDialog_addHeader($element,options);
         }
