@@ -371,6 +371,7 @@
      * Default options
      */
     $.fn.happyrDialog.defaults = {
+        animation: true,
         backdrop: true,
         keyboard: true,
         show: true,
