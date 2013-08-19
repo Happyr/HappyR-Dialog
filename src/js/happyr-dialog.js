@@ -100,7 +100,6 @@
                     var $form=$('form', $(this));
                     if($form.length>0){
                         $(document).on('happyr-dialog-confirm', function(e){
-                            console.log("Submit the form");
 
                             if(options.getFormResultInDialog){
                                 $.ajax({
@@ -158,10 +157,10 @@
                 var transition = $.support.transition && that.$element.hasClass('happyr-dialog-animation')
 
                 if (!that.$element.parent().length) {
-                    that.$element.appendTo(document.body) //don't move dialogs dom position
+                    that.$element.appendTo(document.body); //don't move dialogs dom position
                 }
 
-                that.$element.show()
+                that.$element.show();
 
                 if (transition) {
                     that.$element[0].offsetWidth; // force reflow
@@ -169,7 +168,7 @@
 
                 that.$element
                     .addClass('happyr-dialog-in')
-                    .attr('aria-hidden', false)
+                    .attr('aria-hidden', false);
 
                 that.enforceFocus();
 
@@ -190,19 +189,19 @@
          * @param e
          */
         hide: function (e) {
-            e && e.preventDefault()
+            e && e.preventDefault();
 
-            var that = this
+            var that = this;
 
-            e = $.Event('hide')
+            e = $.Event('hide');
 
-            this.$element.trigger(e)
+            this.$element.trigger(e);
 
             if (!this.isShown || e.isDefaultPrevented()) return
 
-            this.isShown = false
+            this.isShown = false;
 
-            this.escape()
+            this.escape();
 
             $(document).off('focusin.happyr-dialog');
 
@@ -286,10 +285,10 @@
             var animate = this.$element.hasClass('happyr-dialog-animation') ? 'happyr-dialog-animation' : '';
 
             if (this.isShown && this.options.backdrop) {
-                var doAnimate = $.support.transition && animate
+                var doAnimate = $.support.transition && animate;
 
                 this.$backdrop = $('<div class="happyr-dialog-backdrop ' + animate + '" />')
-                    .appendTo(document.body)
+                    .appendTo(document.body);
 
                 this.$backdrop.click(
                     this.options.backdrop == 'static' ?
@@ -302,7 +301,7 @@
                     this.$backdrop[0].offsetWidth;
                 }
 
-                this.$backdrop.addClass('happyr-dialog-in')
+                this.$backdrop.addClass('happyr-dialog-in');
 
                 if (!callback){
                     return;
@@ -410,7 +409,6 @@
         var href = $this.attr('href');
         var $target = $($this.attr('data-target') || (href && !href.match(/[?=]/) && href.replace(/.*(?=#[^\s]+$)/, ''))); //strip for ie7
         var elementSettings=happyrDialog_convertStringToObject($this.attr('data-happyr-dialog-settings'));
-
         elementSettings=$.extend(
             {
                 remote:!/#/.test(href) && href,
@@ -420,6 +418,7 @@
             $this.data(),
             elementSettings
         );
+        console.log(elementSettings);
 
 
         //make sure the button/link does not behave as normal
