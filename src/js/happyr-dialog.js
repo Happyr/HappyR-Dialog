@@ -305,12 +305,13 @@
             if (typeof option === 'string') {
                 data[option]();
             }
-            else if(option.action !== undefined){
-                data[option.action]();
+            else if(option !== undefined && option.action !== undefined){
+               data[option.action]();
             }
             else if (options.show) {
                 data.show();
             }
+
         });
     };
 
