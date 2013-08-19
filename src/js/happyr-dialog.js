@@ -113,42 +113,41 @@
             }
 
             this.isShown = true;
+            this._enableEscape();
 
-            this.escape();
 
-            this.backdrop(function () {
+            if (!that.$element.parent().length) {
+                that.$element.appendTo(document.body); //don't move dialogs dom position
+            }
 
-                if (!that.$element.parent().length) {
-                    that.$element.appendTo(document.body); //don't move dialogs dom position
-                }
+            var triggerShowEvents=function () {
+                that.$element.focus().trigger('shown');
+                $(document).trigger('happyr-dialog-shown');
+            };
 
-                var triggerShowEvents=function () {
-                    that.$element.focus().trigger('shown');
-                    $(document).trigger('happyr-dialog-shown');
-                };
+            var showDialog=function(){
+                that.$element.show();
+                that.$element.attr('aria-hidden', false);
+                that.enforceFocus();
+            }
 
-                var showDialog=function(){
-                    that.$element.show();
-                    that.$element.attr('aria-hidden', false);
-                    that.enforceFocus();
-                }
+            this._showBackdrop();
+            if(that.options.animate){
+                that.$element
+                    .css('opacity',0)
+                    .css('top','-25%');
 
-                if(that.options.animate){
-                    that.$element
-                        .css('opacity',0)
-                        .css('top','-25%');
+                showDialog();
+                that.$element.animate({ top: '10%', opacity: '1' },
+                    that.options.animation.timeDialogShow, 'swing', triggerShowEvents);
 
-                    showDialog();
-                    that.$element.animate({ top: '10%', opacity: '1' },
-                        that.options.animation.timeDialogShow, 'swing', triggerShowEvents);
+            }
+            else{
+                showDialog();
+                triggerShowEvents();
+            }
 
-                }
-                else{
-                    showDialog();
-                    triggerShowEvents();
-                }
 
-            });
         },
 
         /**
@@ -169,14 +168,16 @@
             }
 
             this.isShown = false;
-            this.escape();
+            this._enableEscape();
             $(document).off('focusin.happyr-dialog');
 
             var hideDialog=function(){
                 that.$element.attr('aria-hidden', true);
-                that.hideDialog();
+                that.$element.hide();
+                that.$element.trigger('hidden');
             };
 
+            this._hideBackdrop();
             if(that.options.animate){
                 that.$element.animate({ top: '-25%', opacity: '0' }, that.options.animation.timeDialogHide, 'swing',hideDialog);
             }
@@ -203,8 +204,9 @@
 
         /**
          * Enable to hide the dialog when escape key is pressed
+         * @private
          */
-        escape: function () {
+        _enableEscape: function () {
             var that = this
             if (this.isShown && this.options.keyboard) {
                 this.$element.on('keyup.dismiss.happyr-dialog', function ( e ) {
@@ -217,33 +219,13 @@
 
 
         /**
-         * Hide the dialog
+         * Crete the backdrop and show it
+         * @private
          */
-        hideDialog: function () {
-            var that = this;
-            this.$element.hide();
-            this.backdrop(function () {
-                that.removeBackdrop()
-                that.$element.trigger('hidden')
-            })
-        },
-
-        /**
-         * Remove the backdrop
-         */
-        removeBackdrop: function () {
-            this.$backdrop && this.$backdrop.remove();
-            this.$backdrop = null;
-        },
-
-        /**
-         * Crete the backdrop and run a callback
-         * @param callback
-         */
-        backdrop: function (callback) {
+        _showBackdrop: function () {
             var that = this;
 
-            if (this.isShown && this.options.backdrop) {
+            if (this.options.backdrop) {
 
                 this.$backdrop = $('<div class="happyr-dialog-backdrop" style="display:none" />')
                     .appendTo(document.body);
@@ -256,7 +238,7 @@
                 );
 
 
-                if(this.options.animation){
+                if(this.options.animate){
                     //set opacity = 0
                     this.$backdrop.css('opacity',0);
                     this.$backdrop.show();
@@ -264,26 +246,40 @@
                     //fade to 0.8
                     this.$backdrop.fadeTo(
                         that.options.animation.timeBackdropShow,
-                        that.options.animation.opacityBackdrop,
-                        callback
+                        that.options.animation.opacityBackdrop
                     );
                 }
                 else{
                     this.$backdrop.show();
-                    callback();
                 }
-            } else if (!this.isShown && this.$backdrop) {
-                if(this.options.animation){
-                    //fade to 0
-                    this.$backdrop.fadeTo(that.options.animation.timeDialogHide,0,callback);
-                }
-                else{
-                    callback();
-                }
-
-            } else if (callback) {
-                callback();
             }
+        },
+
+        /**
+         * Hide and remove backdrop
+         * @private
+         */
+        _hideBackdrop: function(){
+            if (!this.$backdrop) {
+                return;
+            }
+
+            var that = this;
+
+            var removeBackdrop=function(){
+                that.$backdrop && that.$backdrop.remove();
+                that.$backdrop = null;
+            }
+
+            //should we animate it away?
+            if(this.options.animate){
+                //fade to 0
+                this.$backdrop.fadeTo(that.options.animation.timeDialogHide,0,removeBackdrop);
+            }
+            else{
+                removeBackdrop();
+            }
+
         }
     };
 
