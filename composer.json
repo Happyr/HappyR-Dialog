@@ -1,7 +1,7 @@
 {
     "name": "happyr/happyr-dialog",
     "type": "js-library",
-    "description": " ",
+    "description": "A nice javascript library that helps you to show dialogs.",
     "keywords": ["dialog"],
     "homepage": "http://developer.happyr.se",
     "license": "MIT",
@@ -10,14 +10,6 @@
             "name": "Tobias Nyholm",
             "email": "tobias@happyrecruiting.se"
         }
-    ],
-    "require": {
+    ]
 
-    },
-    "require-dev": {
-
-    },
-    "autoload": {
-
-    }
 }
