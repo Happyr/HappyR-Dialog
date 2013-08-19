@@ -373,7 +373,7 @@
     $(document).on('click.happyr-dialog.data-api', '[data-toggle="happyr-dialog"]', function (e) {
         var $this = $(this);
         var href = $this.attr('href');
-        var $target = $($this.attr('data-target') || (href && !href.match(/[?=]/) && href.replace(/.*(?=#[^\s]+$)/, ''))); //strip for ie7
+        var $target = $($this.attr('data-target') || (href && !href.match(/[?=\/&]/) && href.replace(/.*(?=#[^\s]+$)/, ''))); //strip for ie7
         var elementSettings=happyrDialog_convertStringToObject($this.attr('data-happyr-dialog-settings'));
         elementSettings=$.extend(
             {
@@ -516,6 +516,7 @@
             $confirmButton.click(function(e){
                 $(document).trigger('happyr-dialog-confirm');
             });
+            $footer.append($confirmButton);
         }
 
 
