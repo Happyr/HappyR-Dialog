@@ -12,7 +12,7 @@
 <h1>Hello, world!</h1>
 
 <!-- Button to trigger modal -->
-<a href="ajax.htm" data-happyr-dialog-settings="{ title:'test',showCloseButton: 'Skit pa dig', backdrop: true}"  title="Testing title from html" role="button" class="btn" data-toggle="happyr-dialog">Launch demo dialog</a>
+<a href="ajax.htm?42" data-happyr-dialog-settings="{ title:'test',showCloseButton: 'Skit på dig'}"  title="Testing title from html" role="button" class="btn" data-toggle="happyr-dialog">Launch demo dialog</a>
 
 <!-- Modal -->
 <div id="myDialog" style="display:none" tabindex="-1" role="dialog" aria-hidden="true">
@@ -29,7 +29,7 @@
 <script>
 
     $.extend($.fn.happyrDialog.defaults,{
-        backdrop: false,
+        backdrop: 'static',
         animation: true,
         title: 'HappyR!!'
     });
