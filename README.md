@@ -4,7 +4,7 @@ HappyR Dialog
 This is a javascript dialog library. The HappyR Dialog depends on jQuery. It is built on Twitter Inc Bootstrap Modal.
 Some features of the HappyR Dialog:
 * responsive design
-* Ajax
+* built for Ajax
 * highly configurable
 * we don't force you to write tons of code of your own
 
