@@ -454,6 +454,9 @@
      * @returns Object
      */
     function happyrDialog_convertStringToObject(string){
+        if(string == undefined || string == ""){
+            return new Object();
+        }
         return JSON.parse(JSON.stringify(eval("("+string+")")));
     }
 
