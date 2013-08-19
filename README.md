@@ -24,13 +24,15 @@ recommended that you import some CSS as well.
     <link rel="stylesheet" type="text/css" href="/css/happyr-dialog.min.css" />
 </head>
 <body>
-
     <a href="#myDialog" data-toggle="happyr-dialog">
         Open dialog
     </a>
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/js/happyr-dialog.min.js"></script>
+
+    <!-- My other js stuff -->
+    <script src="/js/common.js"></script>
 </body>
 </html>
 
@@ -44,7 +46,7 @@ settings: Globally and per dialog.
 To change settings globally use the jQuery.extend
 
 ```js
-// common.js
+// js/common.js
 $.extend($.fn.happyrDialog.defaults,{
     backdrop: 'static',
     title: 'Awesome dialog'
