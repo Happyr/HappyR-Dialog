@@ -31,14 +31,11 @@
 }
 
 .happyr-dialog-header {
-    padding: 9px 15px;
+    padding: 9px 15px 0;
     border-bottom: 1px solid #eee;
 }
 
-.happyr-dialog-header h3 {
-    margin: 0;
-    line-height: 30px;
-}
+
 
 
 /*
@@ -55,7 +52,7 @@
  * Header close button
  */
 .happyr-dialog-header button.close {
-    margin-top: 2px;
+    margin-top: 0px;
 
     padding: 0;
     cursor: pointer;
@@ -64,14 +61,13 @@
     -webkit-appearance: none;
 
     float: right;
-    font-size: 20px;
+    font-size: 1.4em;
     font-weight: bold;
-    line-height: 20px;
+    line-height: 1.4em;
     color: #000000;
     text-shadow: 0 1px 0 #ffffff;
     opacity: 0.2;
     filter: alpha(opacity=20);
-    float:right;
 }
 
 
