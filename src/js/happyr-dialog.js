@@ -347,10 +347,10 @@
         show: true,
         showHeader: true,
         showFooter: true,
-        showCloseButton: true,
-        showConfirmButton: true,
-        showHeaderCloseButton: true,
-        showHeaderTitle: true,
+        showButtonClose: true,
+        showButtonConfirm: true,
+        showButtonHeaderClose: true,
+        showTitle: true,
         submitFormOnConfirm: true,
         texts: {
             close: 'Close',
@@ -484,13 +484,13 @@
         //start header
         var $header=$("<div></div>").addClass('happyr-dialog-header');
 
-        if(options.showHeaderTitle && options.texts.title !== undefined){
+        if(options.showTitle && options.texts.title !== undefined){
             //add heading
             var $title=$("<h3>"+options.texts.title+"</h3>");
             $header.append($title);
         }
 
-        if(options.showConfirmButton){
+        if(options.showButtonHeaderClose){
             //add close button
             var $closeButton=$("<button type='button' class='close' data-dismiss='happyr-dialog' aria-hidden='true'>x</button>");
             $header.append($closeButton);
@@ -513,13 +513,13 @@
 
         var $footer=$("<div></div>").addClass('happyr-dialog-footer');
 
-        if(options.showCloseButton){
+        if(options.showButtonClose){
             //add buttons
             var $closeButton=$("<button class='btn' data-dismiss='happyr-dialog' aria-hidden='true'>"+options.texts.close+"</button>");
             $footer.append($closeButton);
         }
 
-        if(options.showConfirmButton){
+        if(options.showButtonConfirm){
             var $confirmButton=$("<button class='btn btn-primary'>"+options.texts.confirm+"</button>");
             $confirmButton.click(function(e){
                 $(document).trigger('happyr-dialog-confirm');
