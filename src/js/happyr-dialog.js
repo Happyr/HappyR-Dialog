@@ -37,6 +37,7 @@
      * @constructor
      */
     var HappyrDialog = function (element, options) {
+	    var that=this;
         this.options = options;
         this.$element = $(element);
 
@@ -57,20 +58,24 @@
                 $dialogBody.html('<img class="happyr-dialog-loader" src="'+options.loaderImage+'" />');
             }
 
-            $dialogBody.load(this.options.remote, function(){
-                if( options.submitFormOnConfirm ){
-
-                    var $form=$('form', $(this));
-                    if($form.length>0){
+			/**
+			* What to do when ajax content is loaded
+			*/
+			var ajaxContentLoaded=function(){
+				if( options.submitFormOnConfirm ){
+					that.$element.trigger('ajax-loaded');
+					
+                    var $form=$('form', that.$element);
+                    if($form.length > 0){
                         $(document).on('happyr-dialog-confirm', function(e){
-
                             if(options.getFormResultInDialog){
                                 $.ajax({
-                                    type: $form.attr('method'),
+                                    type: $form.attr('method') ? $form.attr('method'): 'POST',
                                     url: $form.attr('action'),
                                     data: $form.serialize(),
                                     success: function (data) {
                                         $dialogBody.html(data);
+										ajaxContentLoaded();
                                     }
                                 });
                             }
@@ -81,8 +86,17 @@
                         });
                     }
                 }
-
-            });
+			}
+			
+			//there is a bug i jQuery that strips form tags when you do load..
+			//$dialogBody.load(this.options.remote, ajaxContentLoaded);
+			$.get(this.options.remote,function(response){
+				//clear the body
+				$dialogBody.html("");
+				$dialogBody.append(response);
+								
+				ajaxContentLoaded();
+			});
         }
     };
 
