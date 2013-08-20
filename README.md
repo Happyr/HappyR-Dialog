@@ -51,10 +51,13 @@ To change settings globally use the jQuery.extend
 
 ```js
 // js/common.js
-$.extend($.fn.happyrDialog.defaults,{
-    backdrop: 'static',
-    title: 'Awesome dialog'
-});
+$.happyrDialogSetDefaults({
+    backdrop: "static",
+    texts: {
+        confirm:"Okey" ,
+        title: "Awesome dialog"
+    }
+    });
 
 ```
 

@@ -1,0 +1,21 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="/happyr-dialog.min.css" />
+</head>
+<body>
+<a href="#myDialog" data-toggle="happyr-dialog">
+    Open dialog
+</a>
+
+<div id="myDialog" style="display:none">
+    Dialog contents.
+</div>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="/src/js/happyr-dialog.js"></script>
+<script>
+    $.happyrDialogSetDefaults({backdrop:false, texts: { confirm:"Okey" }})
+</script>
+</body>
+</html>

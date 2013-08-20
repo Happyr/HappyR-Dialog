@@ -281,6 +281,21 @@
     };
 
 
+
+    $.extend({
+        /**
+         * Add function to easy extend the settings
+         * @param settings
+         */
+        happyrDialogSetDefaults: function(settings){
+            $.fn.happyrDialog.defaults = $.extend(
+                true,
+                $.fn.happyrDialog.defaults,
+                settings
+            );
+        }
+    });
+
     // save current dialog impl
     var old = $.fn.happyrDialog;
 
