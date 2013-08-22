@@ -42,6 +42,18 @@ recommended that you import some CSS as well.
 
 ```
 
+### Responsive design
+
+To make sure the responsive design behaves as expected, please make sure that you have the viewport meta tag in
+you HTML head section.
+
+```html
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- other stuff -->
+</head>
+``1
+
 ### Override default settings
 
 The library has a quite a few settings and the defaults are not always suitable to you. There is two ways of to define
