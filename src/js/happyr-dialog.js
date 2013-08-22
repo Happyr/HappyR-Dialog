@@ -481,6 +481,7 @@
 
         //add the body
         var $bodyWrapper=$("<div></div>").addClass('happyr-dialog-body').append(body);
+
         $element.append($bodyWrapper);
 
         if(options.showFooter){
