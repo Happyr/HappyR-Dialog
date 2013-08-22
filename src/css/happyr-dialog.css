@@ -23,7 +23,7 @@
     background-clip: padding-box;
     outline: none;
 
-    max-height: 85%;
+
     overflow-y: auto;
     overflow-x: hidden;
 }

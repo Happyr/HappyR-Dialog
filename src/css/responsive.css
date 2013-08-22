@@ -5,6 +5,7 @@
     width: 90%;
     left: 5%;
     margin-left: 0;
+    max-height: 85%;
 }
 
 .happyr-dialog-body{
@@ -54,5 +55,14 @@
         /* Make it wider as well */
         width: 96%;
         left: 2%;
+    }
+}
+
+@media screen and (min-height: 35em){
+    /**
+     * We don't need it 85% high any more
+     */
+    .happyr-dialog{
+        max-height: 80%;
     }
 }
