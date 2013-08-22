@@ -23,7 +23,6 @@
     background-clip: padding-box;
     outline: none;
 
-
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -64,6 +63,7 @@
     font-size: 1.5em;
     font-weight: bold;
     line-height: 1em;
+    height: auto;
     color: #000000;
     text-shadow: 0 1px 0 #ffffff;
     opacity: 0.2;

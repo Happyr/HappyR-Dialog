@@ -507,7 +507,7 @@
 
         if(options.showButtonHeaderClose){
             //add close button
-            var $closeButton=$("<button type='button' class='close' data-dismiss='happyr-dialog' aria-hidden='true'>x</button>");
+            var $closeButton=$("<button type='button' class='close' title='"+options.texts.close+"' data-dismiss='happyr-dialog' aria-hidden='true'>x</button>");
             $header.append($closeButton);
         }
 
