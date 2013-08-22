@@ -525,7 +525,8 @@
      */
     function happyrDialog_addFooter($element,options){
 
-        var $footer=$("<div></div>").addClass('happyr-dialog-footer');
+        var $wrapper=$("<div></div>").addClass('happyr-dialog-footer');
+        var $footer=$("<div></div>").addClass("padder");
 
         if(options.showButtonClose){
             //add buttons
@@ -542,7 +543,8 @@
         }
 
 
-        $element.append($footer);
+        $wrapper.append($footer);
+        $element.append($wrapper);
     }
 
 
