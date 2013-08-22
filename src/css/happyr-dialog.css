@@ -108,7 +108,7 @@
     content: "";
     line-height: 0;
 }
-.happyr-dialog-footer:before {
+.happyr-dialog-footer:after {
     clear: both;
 }
 
