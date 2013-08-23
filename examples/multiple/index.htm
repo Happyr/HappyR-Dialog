@@ -1,0 +1,31 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="/happyr-dialog.min.css" />
+
+    <!-- Make sure you have this line if you want the dialog to be responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<a href="#myDialog1" data-happyr-dialog-title="Dialog1" data-toggle="happyr-dialog">
+    Open dialog 1
+</a>
+<br />
+<a href="#myDialog2" data-toggle="happyr-dialog">
+    Open dialog 2
+</a>
+
+
+<div id="myDialog1" style="display:none">
+    Dialog 1 contents.
+</div>
+
+<div id="myDialog2" style="display:none">
+    Dialog 2 contents.
+</div>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="/src/js/happyr-dialog.js"></script>
+
+</body>
+</html>

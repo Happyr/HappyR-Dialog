@@ -302,7 +302,7 @@
          * @param settings
          */
         happyrDialogSetDefaults: function(settings){
-            $.fn.happyrDialog.defaults = $.extend(
+            $.fn.happyrDialog.defaults=$.extend(
                 true,
                 $.fn.happyrDialog.defaults,
                 settings
@@ -323,7 +323,7 @@
         return this.each(function () {
             var $this = $(this);
             var data = $this.data('happyrDialog');
-            var options = $.extend(true, $.fn.happyrDialog.defaults, $this.data(), typeof option === 'object' && option);
+            var options = $.extend(true,  {}, $.fn.happyrDialog.defaults, $this.data(), typeof option === 'object' && option);
 
             //if no dialog or not dialog visible
             if(!data || !data.isShown){
@@ -389,7 +389,6 @@
     };
 
 
-
     /**
      * Auto add dialog if clickable element data-toggle="happyr-dialog" is defined
      */
@@ -400,7 +399,7 @@
         var elementSettings=happyrDialog_convertStringToObject($this.attr('data-happyr-dialog-settings'));
 
         if($this.attr('data-happyr-dialog-title')){
-            elementSettings.texts=$.extend(true,elementSettings.texts,
+            elementSettings.texts=$.extend(true, elementSettings.texts,
                 {title: $this.attr('data-happyr-dialog-title')});
         }
 
@@ -413,6 +412,7 @@
             $this.data(),
             elementSettings
         );
+
 
         //make sure the button/link does not behave as normal
         e.preventDefault();
