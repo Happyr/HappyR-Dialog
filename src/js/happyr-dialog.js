@@ -64,6 +64,11 @@
 			var ajaxContentLoaded=function(){
 				if( options.submitFormOnConfirm ){
 					that.$element.trigger('ajax-loaded');
+
+                    //run callback
+                    if(that.options.ajaxCallback != undefined){
+                        happyrDialog_runCallback(that.options.ajaxCallback, $(element));
+                    }
 					
                     var $form=$('form', that.$element);
                     if($form.length > 0){
@@ -546,6 +551,24 @@
 
         $wrapper.append($footer);
         $element.append($wrapper);
+    }
+
+    /**
+     * Run a callback function with parameter..
+     *
+     * @param callback
+     * @param param
+     */
+    function happyrDialog_runCallback(callback, param){
+
+        if(typeof callback === 'function'){
+            return callback(param);
+        }
+
+        var fn = window[callback];
+        if(typeof fn === 'function') {
+            return fn(param);
+        }
     }
 
 
