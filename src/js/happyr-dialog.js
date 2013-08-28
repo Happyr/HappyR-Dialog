@@ -194,6 +194,7 @@
                 that.$element.attr('aria-hidden', true);
                 that.$element.hide();
                 that.$element.trigger('hidden');
+                $(document).trigger('happyr-dialog-close');
             };
 
             this._hideBackdrop();
