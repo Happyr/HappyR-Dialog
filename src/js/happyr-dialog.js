@@ -212,8 +212,10 @@
         enforceFocus: function () {
             var that = this;
             $(document).on('focusin.happyr-dialog', function (e) {
-                if (that.$element[0] !== e.target && !that.$element.has(e.target).length) {
-                    that.$element.focus()
+                if(that.options.enforceFocus){
+                    if (that.$element[0] !== e.target && !that.$element.has(e.target).length) {
+                        that.$element.focus()
+                    }
                 }
             });
         },
@@ -362,6 +364,7 @@
             opacityBackdrop: 0.8
         },
         backdrop: true,
+        enforceFocus: true,
         keyboard: true,
         show: true,
         showHeader: true,
