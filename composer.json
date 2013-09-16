@@ -3,7 +3,7 @@
     "type": "js-library",
     "description": "A nice javascript library that helps you to show dialogs.",
     "keywords": ["dialog"],
-    "homepage": "http://developer.happyr.se",
+    "homepage": "http://developer.happyr.se/libraries/jquery-happyr-dialog",
     "license": "MIT",
     "authors": [
         {
