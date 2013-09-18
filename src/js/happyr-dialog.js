@@ -75,6 +75,7 @@
                         //remove previous listeners
                         $(document).off('happyr-dialog-confirm.submit-dialog');
 
+                        //add new listener
                         $(document).one('happyr-dialog-confirm.submit-dialog', function(e){
                             if(options.getFormResultInDialog){
                                 $.ajax({
