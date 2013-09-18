@@ -72,7 +72,10 @@
 					
                     var $form=$('form', that.$element);
                     if($form.length > 0){
-                        $(document).one('happyr-dialog-confirm', function(e){
+                        //remove previous listeners
+                        $(document).off('happyr-dialog-confirm.submit-dialog');
+
+                        $(document).one('happyr-dialog-confirm.submit-dialog', function(e){
                             if(options.getFormResultInDialog){
                                 $.ajax({
                                     type: $form.attr('method') ? $form.attr('method'): 'POST',
