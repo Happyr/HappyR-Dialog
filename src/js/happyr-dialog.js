@@ -85,6 +85,8 @@
                                     success: function (data) {
                                         if(options.hideAfterFormSubmit && options.validateFormResponse(data)){
                                             $("#happyr-dialog").happyrDialog('hide');
+                                            //we dont need to run any more code..
+                                            return;
                                         }
 
                                         $dialogBody.html(data);
