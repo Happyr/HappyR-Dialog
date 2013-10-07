@@ -83,6 +83,10 @@
                                     url: $form.attr('action'),
                                     data: $form.serialize(),
                                     success: function (data) {
+                                        if(options.hideAfterFormSubmit && options.validateFormResponse(data)){
+                                            $("#happyr-dialog").happyrDialog('hide');
+                                        }
+
                                         $dialogBody.html(data);
 										ajaxContentLoaded();
                                     }
@@ -370,6 +374,7 @@
         },
         backdrop: true,
         enforceFocus: true,
+        hideAfterFormSubmit: false,
         keyboard: true,
         show: true,
         showHeader: true,
@@ -384,7 +389,9 @@
             confirm: 'Confirm'
         },
         getFormResultInDialog: true,
-        hideAfterFormSubmit: false
+        validateFormResponse: function(data){
+            return false;
+        }
     };
 
     $.fn.happyrDialog.Constructor = HappyrDialog;
