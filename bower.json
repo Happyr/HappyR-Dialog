@@ -9,7 +9,7 @@
   "main": "[happyr-dialog.min.css,happyr-dialog.min.js]",
   "license": "MIT",
   "dependencies": {
-    "jquery":"*"
+    "jquery":">= 1.7.1"
   },
   "ignore": [
     "**/.*",
