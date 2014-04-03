@@ -24,7 +24,14 @@
         remote:"/examples/ajaxCallback/ajax.htm",
         ajaxCallback: function(){
             console.log('Ajax content loaded. Anonymous function.');
+        },
+        confirmCallback: function(){
+            console.log('You pressed the confirm button. Anonymous function.');
+        },
+        closeCallback: function(element){
+            console.log('You pressed the close button. Anonymous function.');
         }
+
     });
 
 

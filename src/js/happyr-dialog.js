@@ -2,7 +2,7 @@
  * HappyR Dialog is based on bootstrap modal by Twitter Inc.
  *
  * Documentation and examples is found at http://developer.happyr.se
- *
+ * @license MIT
  * =========================================================
  * The MIT License (MIT)
  *
@@ -76,7 +76,7 @@
                         $(document).off('happyr-dialog-confirm.submit-dialog');
 
                         //add new listener
-                        $(document).one('happyr-dialog-confirm.submit-dialog', function(e){
+                        $(document).one('happyr-dialog-confirm.submit-dialog', function(){
                             if(options.getFormResultInDialog){
                                 $.ajax({
                                     type: $form.attr('method') ? $form.attr('method'): 'POST',
@@ -391,7 +391,7 @@
             confirm: 'Confirm'
         },
         getFormResultInDialog: true,
-        validateFormResponse: function(data){
+        validateFormResponse: function(){
             return false;
         }
     };
@@ -546,7 +546,7 @@
      * @param $element
      * @param options
      */
-    function happyrDialog_addFooter($element,options){
+    function happyrDialog_addFooter($element, options){
 
         var $wrapper=$("<div></div>").addClass('happyr-dialog-footer');
         var $footer=$("<div></div>").addClass("padder");
@@ -554,13 +554,17 @@
         if(options.showButtonClose){
             //add buttons
             var $closeButton=$("<button class='btn' data-dismiss='happyr-dialog' aria-hidden='true'>"+options.texts.close+"</button>");
+            $closeButton.click(function(){
+                happyrDialog_runCallback(options.closeCallback, $element);
+            });
             $footer.append($closeButton);
         }
 
         if(options.showButtonConfirm){
             var $confirmButton=$("<button class='btn btn-primary'>"+options.texts.confirm+"</button>");
-            $confirmButton.click(function(e){
+            $confirmButton.click(function(){
                 $(document).trigger('happyr-dialog-confirm');
+                happyrDialog_runCallback(options.confirmCallback, $element);
             });
             $footer.append($confirmButton);
         }
